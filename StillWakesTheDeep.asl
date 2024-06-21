@@ -34,7 +34,7 @@ update
 
 onStart
 {
-	vars.CompletedSplits.Clear();
+	vars.completedSplits.Clear();
 	
 	// This makes sure the timer always starts at 0.00
 	timer.IsGameTimePaused = true;
