@@ -19,6 +19,5 @@
 	<Setting Id="/Story/Persistent/40_Sinking/Sinking_Admin_Interior_P" Label="Sinking Admin Interior" State="false" />
 	<Setting Id="/Story/Persistent/50_Finale/Finale_Deck_P" Label="Drill Operations" State="false" />
 	<Setting Id="/Story/Persistent/50_Finale/EndGame_P" Label="Final Split (After Lighter Explosion)" State="false" />
-	<Setting Id="End" Label="Final Split (Final Door)" State="false" />
   </Setting>
 </Settings>
