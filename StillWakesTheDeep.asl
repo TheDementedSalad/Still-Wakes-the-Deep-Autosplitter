@@ -20,8 +20,8 @@ init
 	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x490, 0x2F8, 0x26C);
 	
 	vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
-	vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
-	vars.Helper["isSkipPrompt"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x38C);
+	//vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
+	//vars.Helper["isSkipPrompt"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x38C);
 	
 	vars.Helper["localPlayer"] = vars.Helper.Make<long>(gWorld, 0x1B8, 0x38, 0x0, 0x30);
 	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
@@ -77,7 +77,8 @@ split
 
 isLoading
 {
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 && current.isSkipPrompt == 0 || current.isCutscene == 1 && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
+	//return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 && current.isSkipPrompt == 0 || current.isCutscene == 1 && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
+	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 || current.BlackScreen == 1f && current.isPaused != 1;
 }
 
 exit
