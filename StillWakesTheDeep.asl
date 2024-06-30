@@ -19,7 +19,8 @@ init
 	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xA58, 0x120, 0x8D8);
 	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA58, 0x120, 0x110, 0x115C);
 	
-	vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
+	vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x2D8, 0x791);
+	vars.Helper["isSkipPrompt"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x378);
 	
 	vars.Helper["localPlayer"] = vars.Helper.Make<long>(gWorld, 0x1B8, 0x38, 0x0, 0x30);
 	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
@@ -41,14 +42,9 @@ onStart
 	timer.IsGameTimePaused = true;
 }
 
-isLoading
-{
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.isCutscene == 1 || current.localPlayer == null || current.BlackScreen == 1f && current.isPaused != 1;
-}
-
 start
 {
-	return current.Level == "/Story/Persistent/20_Intro/Intro_Accom_Interior_P" && current.isCutscene == 3 && old.isCutscene == 1;
+	return current.Level == "/Story/Persistent/20_Intro/Intro_Accom_Interior_P" && !current.isCutscene && old.isCutscene;
 }
 
 split
@@ -58,11 +54,7 @@ split
 	if(current.Level != old.Level){
 		setting = current.Level;
 	}
-	
-	if(current.Level == "/Story/Persistent/50_Finale/EndGame_Glasgow_P" && current.isCutscene == 1 && old.isCutscene == 3){
-		setting = "End";
-	}
-	
+
 	if(current.Level == "/Story/Persistent/30_Event/Event_Accom_Interior_P" && old.Level == "/Story/Persistent/30_Event/Event_Accom_Exterior_P"){
 		setting = "Accom_Revist";
 	}
@@ -74,6 +66,11 @@ split
 	if (settings.ContainsKey(setting) && settings[setting] && vars.completedSplits.Add(setting)){
 		return true;
 	}
+}
+
+isLoading
+{
+	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene && current.isSkipPrompt || current.BlackScreen == 1f && current.isPaused != 1;
 }
 
 exit
