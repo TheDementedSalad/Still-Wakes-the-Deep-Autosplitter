@@ -20,18 +20,25 @@ init
 	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA58, 0x120, 0x110, 0x115C);
 	
 	vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x2D8, 0x791);
-	vars.Helper["isSkipPrompt"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x378);
+	vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
+	vars.Helper["isSkipPrompt"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x38C);
 	
 	vars.Helper["localPlayer"] = vars.Helper.Make<long>(gWorld, 0x1B8, 0x38, 0x0, 0x30);
 	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 	
 	vars.completedSplits = new HashSet<string>();
+	
+	vars.Engine = gEngine;
 }
 
 update
 {
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
+	
+	if(!current.isCutscene && old.isCutscene){
+		game.WriteValue<byte>(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer((IntPtr)vars.Engine) + 0x1080) + 0x38) + 0x0) + 0x30) + 0x8B8) + 0x380) + 0x40, 0);
+	}
 }
 
 onStart
@@ -70,7 +77,7 @@ split
 
 isLoading
 {
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene && current.isSkipPrompt || current.BlackScreen == 1f && current.isPaused != 1;
+	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene && current.isSkipPrompt == 0 || current.isCutscene && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
 }
 
 exit
