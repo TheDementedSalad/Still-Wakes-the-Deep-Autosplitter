@@ -19,7 +19,7 @@ init
 	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x128, 0xB70);
 	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x490, 0x2F8, 0x26C);
 	
-	vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x2D8, 0x791);
+	vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
 	vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
 	vars.Helper["isSkipPrompt"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x38C);
 	
@@ -36,7 +36,7 @@ update
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
 	
-	if(!current.isCutscene && old.isCutscene){
+	if(current.isCutscene == 3 && old.isCutscene == 1){
 		game.WriteValue<byte>(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer((IntPtr)vars.Engine) + 0x1080) + 0x38) + 0x0) + 0x30) + 0x8B8) + 0x380) + 0x40, 0);
 	}
 }
@@ -51,7 +51,7 @@ onStart
 
 start
 {
-	return current.Level == "/Story/Persistent/20_Intro/Intro_Accom_Interior_P" && !current.isCutscene && old.isCutscene;
+	return current.Level == "/Story/Persistent/20_Intro/Intro_Accom_Interior_P" && current.isCutscene == 3 && old.isCutscene == 1;
 }
 
 split
@@ -77,7 +77,7 @@ split
 
 isLoading
 {
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene && current.isSkipPrompt == 0 || current.isCutscene && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
+	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 && current.isSkipPrompt == 0 || current.isCutscene == 1 && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
 }
 
 exit
