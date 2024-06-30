@@ -16,8 +16,8 @@ init
 	vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xB98, 0x24);
 	vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 	
-	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xA58, 0x120, 0x8D8);
-	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA58, 0x120, 0x110, 0x115C);
+	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x128, 0xB70);
+	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x490, 0x2F8, 0x26C);
 	
 	vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x2D8, 0x791);
 	vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
