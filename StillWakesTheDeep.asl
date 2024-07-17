@@ -10,6 +10,16 @@ startup
 
 init
 {
+	switch (modules.First().ModuleMemorySize)
+	{
+		case (163450880):
+			version = "Patch 1";
+			break;
+		default:
+			version = "Release";
+			break;
+	}
+	
 	IntPtr gWorld = vars.Helper.ScanRel(3, "48 8B 05 ???????? 48 3B C? 48 0F 44 C? 48 89 05 ???????? E8");
 	IntPtr gEngine = vars.Helper.ScanRel(3, "48 89 05 ???????? 48 85 c9 74 ?? e8 ???????? 48 8d 4d");
 	
@@ -19,20 +29,23 @@ init
 	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x128, 0xB70);
 	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x490, 0x2F8, 0x26C);
 	
-	vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
-	//vars.Helper["isSkipInput"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x380, 0x40);
-	//vars.Helper["isSkipPrompt"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x38C);
-	
 	vars.Helper["localPlayer"] = vars.Helper.Make<long>(gWorld, 0x1B8, 0x38, 0x0, 0x30);
 	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 	
 	vars.completedSplits = new HashSet<string>();
 	
 	vars.Engine = gEngine;
+	
+	if (version == "Patch 1"){
+		vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8C0, 0x2FC);
+	}
+	else vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
 }
 
 update
 {
+	//print(modules.First().ModuleMemorySize.ToString());
+	
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
 	
