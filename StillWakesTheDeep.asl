@@ -22,12 +22,13 @@ init
 	
 	IntPtr gWorld = vars.Helper.ScanRel(3, "48 8B 05 ???????? 48 3B C? 48 0F 44 C? 48 89 05 ???????? E8");
 	IntPtr gEngine = vars.Helper.ScanRel(3, "48 89 05 ???????? 48 85 c9 74 ?? e8 ???????? 48 8d 4d");
+	IntPtr Screen = vars.Helper.ScanRel(3, "48 8d 0d ???????? e8 ???????? 41 8b 46 ?? 83 e8");
 	
 	vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xB98, 0x24);
 	vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 	
-	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x128, 0xB70);
-	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0x1080, 0x38, 0x0, 0x78, 0x490, 0x2F8, 0x26C);
+	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xB93);
+	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(Screen, 0x310, 0x26C);
 	
 	vars.Helper["localPlayer"] = vars.Helper.Make<long>(gWorld, 0x1B8, 0x38, 0x0, 0x30);
 	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
@@ -90,8 +91,7 @@ split
 
 isLoading
 {
-	//return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 && current.isSkipPrompt == 0 || current.isCutscene == 1 && current.isSkipInput || current.BlackScreen == 1f && current.isPaused != 1;
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.localPlayer == null || current.isCutscene == 1 || current.BlackScreen == 1f && current.isPaused != 1;
+	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.isCutscene == 1 || current.localPlayer == null || current.BlackScreen == 1f && current.isPaused != 1;
 }
 
 exit
