@@ -15,6 +15,9 @@ init
 		case (163450880):
 			version = "Patch 1";
 			break;
+		case (163495936):
+			version = "Patch 3";
+			break;
 		default:
 			version = "Release";
 			break;
