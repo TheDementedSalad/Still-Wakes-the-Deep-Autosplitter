@@ -18,6 +18,9 @@ init
 		case (163495936):
 			version = "Patch 3";
 			break;
+		case (174006272):
+			version = "DLC";
+			break;
 		default:
 			version = "Release";
 			break;
@@ -27,29 +30,31 @@ init
 	IntPtr gSyncLoad = vars.Helper.ScanRel(21, "33 C0 0F 57 C0 F2 0F 11 05");
 	IntPtr fNames = vars.Helper.ScanRel(3, "48 8d 0d ?? ?? ?? ?? e8 ?? ?? ?? ?? c6 05 ?? ?? ?? ?? ?? 0f 10 07");
 	
-	vars.Helper["isLoading"] = vars.Helper.Make<bool>(gSyncLoad);
 	
-	// gEngine.TransitionDescription
-	vars.Helper["PlayerStart"] = vars.Helper.Make<ulong>(gEngine, 0x1080, 0x0488);
-	vars.Helper["PlayerStart"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
-	
-	vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xB98, 0x24);
-	vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
-	
-	vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xB93);
-	vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA58, 0x490, 0x2F8, 0x26C);
-	
-	vars.Helper["localPlayer"] = vars.Helper.Make<ulong>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x18);
-	vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
-	
+	if (version == "Release" || version == "Patch 1" || version == "Patch 3"){
+		vars.Helper["isLoading"] = vars.Helper.Make<bool>(gSyncLoad);
+		vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xB98, 0x0);
+		vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
+		vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xB93);
+		vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA58, 0x490, 0x2F8, 0x26C);
+		vars.Helper["localPlayer"] = vars.Helper.Make<ulong>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x18);
+		vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
+		vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8CD);
+	}
+	else{
+		vars.Helper["isLoading"] = vars.Helper.Make<bool>(gSyncLoad);
+		vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xBC0, 0x0);
+		vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
+		vars.Helper["isPaused"] = vars.Helper.Make<byte>(gEngine, 0xBBB);
+		vars.Helper["BlackScreen"] = vars.Helper.Make<float>(gEngine, 0xA80, 0x490, 0x318, 0x26C);
+		vars.Helper["localPlayer"] = vars.Helper.Make<ulong>(gEngine, 0x10A8, 0x38, 0x0, 0x30, 0x18);
+		vars.Helper["localPlayer"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
+		vars.Helper["isCutscene"] = vars.Helper.Make<bool>(gEngine, 0x10A8, 0x38, 0x0, 0x30, 0x8CD);
+	}
+		
 	vars.completedSplits = new HashSet<string>();
 	
 	vars.Engine = gEngine;
-	
-	if (version == "Release"){
-		vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8B8, 0x2FC);
-	}
-	else vars.Helper["isCutscene"] = vars.Helper.Make<byte>(gEngine, 0x1080, 0x38, 0x0, 0x30, 0x8C0, 0x2FC);
 	
 	vars.FNameToString = (Func<ulong, string>)(fName =>
 	{
@@ -102,13 +107,7 @@ update
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
 	
-	if(current.isCutscene == 3 && old.isCutscene == 1){
-		game.WriteValue<byte>(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer(game.ReadPointer((IntPtr)vars.Engine) + 0x1080) + 0x38) + 0x0) + 0x30) + 0x8B8) + 0x380) + 0x40, 0);
-	}
-	
-	//print(vars.FNameToShortString3(current.localPlayer));
-	
-	//print(current.PlayerStart);
+	//print(vars.FNameToShortString2(current.story));
 }
 
 onStart
@@ -121,7 +120,10 @@ onStart
 
 start
 {
-	return current.Level == "/Story/Persistent/20_Intro/Intro_Accom_Interior_P" && current.isCutscene == 3 && old.isCutscene == 1;
+	if((current.Level == "/Game/Habitat/Maps/Story/Persistent/20_Intro/Intro_Accom_Interior_P" || current.Level == "/Game/HabitatDLC/Maps/Story_DLC/Persistent/DLC_P") 
+		&& !current.isCutscene && old.isCutscene){
+			return true;
+	}
 }
 
 split
@@ -132,11 +134,11 @@ split
 		setting = current.Level;
 	}
 
-	if(current.Level == "/Story/Persistent/30_Event/Event_Accom_Interior_P" && old.Level == "/Story/Persistent/30_Event/Event_Accom_Exterior_P"){
+	if(current.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Interior_P" && old.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Exterior_P"){
 		setting = "Accom_Revist";
 	}
 	
-	if(current.Level == "/Story/Persistent/30_Event/Event_Admin_Exterior_P" && old.Level == "/Story/Persistent/30_Event/Event_Legs_P"){
+	if(current.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Exterior_P" && old.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Legs_P"){
 		setting = "Admin_Ex_Revisit";
 	}
 	
@@ -147,8 +149,9 @@ split
 
 isLoading
 {
-	return current.Level == "/Minimal/startup" || current.Level == "/Story/Persistent/Menu_P" || current.isCutscene == 1 || current.isLoading ||
-		vars.FNameToShortString3(current.localPlayer) != "BP_HabitatControllerInGame_C_" || current.BlackScreen == 1f && current.isPaused != 1;
+	return current.Level == "/Game/Habitat/Maps/Minimal/startup" || current.Level == "/Game/Habitat/Maps/Story/Persistent/Menu_P" || current.isCutscene || current.isLoading ||
+		vars.FNameToShortString3(current.localPlayer) != "BP_HabitatControllerInGame_C_" && vars.FNameToShortString3(current.localPlayer) != "BP_HabitatControllerInGame_DLC_C_" || 
+		current.BlackScreen == 1f && current.isPaused != 1;
 	
 	//current.BlackScreen == 1f && current.isPaused != 1
 }
@@ -158,3 +161,4 @@ exit
 	 //pauses timer if the game crashes
 	timer.IsGameTimePaused = true;
 }
+
