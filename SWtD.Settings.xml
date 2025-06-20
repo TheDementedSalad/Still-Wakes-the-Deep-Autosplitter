@@ -21,7 +21,6 @@
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/50_Finale/EndGame_P" Label="Final Split (After Lighter Explosion)" State="false" />
 	</Setting>
 	<Setting Label="DLC Map Splits">
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/20_Intro/Intro_Deck_P" Label="Reach Act 2" State="false" />
 		<Setting Id="/Game/HabitatDLC/Maps/Story_DLC/Persistent/DLC_Skye_P" Label="Other Map" State="false" />
 	</Setting>
 </Settings>
