@@ -21,6 +21,9 @@ init
 		case (174006272):
 			version = "DLC";
 			break;
+		case (174096384):
+			version = "25 June 25";
+			break;
 		default:
 			version = "Release";
 			break;
@@ -31,7 +34,7 @@ init
 	IntPtr fNames = vars.Helper.ScanRel(3, "48 8d 0d ?? ?? ?? ?? e8 ?? ?? ?? ?? c6 05 ?? ?? ?? ?? ?? 0f 10 07");
 	
 	
-	if (version == "Release" || version == "Patch 1" || version == "Patch 3"){
+	if (version == "Release" || version == "Patch 1"){
 		vars.Helper["isLoading"] = vars.Helper.Make<bool>(gSyncLoad);
 		vars.Helper["Level"] = vars.Helper.MakeString(gEngine, 0xB98, 0x0);
 		vars.Helper["Level"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
