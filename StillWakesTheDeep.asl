@@ -24,6 +24,9 @@ init
 		case (174096384):
 			version = "25 June 25";
 			break;
+		case (173944832):
+			version = "7 July 25";
+			break;
 		default:
 			version = "Release";
 			break;
@@ -123,7 +126,7 @@ onStart
 
 start
 {
-	if((current.Level == "/Game/Habitat/Maps/Story/Persistent/20_Intro/Intro_Accom_Interior_P" || current.Level == "/Game/HabitatDLC/Maps/Story_DLC/Persistent/DLC_P") 
+	if((current.Level == "/Game/Habitat/Maps/Story/Persistent/20_Intro/Intro_Accom_Interio" || current.Level == "/Game/HabitatDLC/Maps/Story_DLC/Persistent/DLC_P") 
 		&& !current.isCutscene && old.isCutscene){
 			return true;
 	}
@@ -164,4 +167,3 @@ exit
 	 //pauses timer if the game crashes
 	timer.IsGameTimePaused = true;
 }
-
