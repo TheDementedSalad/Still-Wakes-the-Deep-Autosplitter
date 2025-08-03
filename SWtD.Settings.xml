@@ -2,21 +2,21 @@
 	<Setting Label="Map Splits">
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/20_Intro/Intro_Deck_P" Label="Reach the Deck For the First Time" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_UnderRig_P" Label="Wake Up After Flashback" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Engineering_A_P" Label="Reach Engineering" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Interior_P" Label="Reach Accomodation" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Exterior_P" Label="Reach Portside" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Engineering_A" Label="Reach Engineering" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Interio" Label="Reach Accomodation" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Exterio" Label="Reach Portside" State="false" />
 		<Setting Id="Accom_Revist" Label="Back to Accomodation" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Deck_P" Label="Deck After Going Back to Roy" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Interior_P" Label="Reach Administration" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Exterior_P" Label="Reach Starboard Side" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Engineering_B_P" Label="Back to Engineering" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Interio" Label="Reach Administration" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Exterio" Label="Reach Starboard Side" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Engineering_B" Label="Back to Engineering" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Legs_P" Label="Reach the Pontoons" State="false" />
 		<Setting Id="Admin_Ex_Revisit" Label="Back to Admin Exterior" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_UnderRig_P" Label="Wake After Killing Addair" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Engineering_A_P" Label="Back to Engineering AGAIN" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Accom_Interior_P" Label="Back to Accomodation AGAIN" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_UnderRig_" Label="Wake After Killing Addair" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Engineeri" Label="Back to Engineering AGAIN" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Accom_Int" Label="Back to Accomodation AGAIN" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Deck_P" Label="Reach Accomodation Deck" State="false" />
-		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Admin_Interior_P" Label="Sinking Admin Interior" State="false" />
+		<Setting Id="/Game/Habitat/Maps/Story/Persistent/40_Sinking/Sinking_Admin_Int" Label="Sinking Admin Interior" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/50_Finale/Finale_Deck_P" Label="Drill Operations" State="false" />
 		<Setting Id="/Game/Habitat/Maps/Story/Persistent/50_Finale/EndGame_P" Label="Final Split (After Lighter Explosion)" State="false" />
 	</Setting>

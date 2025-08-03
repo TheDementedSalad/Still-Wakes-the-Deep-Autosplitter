@@ -136,15 +136,18 @@ split
 {  
 	string setting = "";
 	
+	//As of 7 July 25 patch, these levels are cut at 64 characters, cutting all to keep level names consistent between all patches in settings
+	int levelStringMaxLength = 64;
+	string oldsetting = old.Level.Length <= levelStringMaxLength ? old.Level : old.Level.Substring(0,levelStringMaxLength);
 	if(current.Level != old.Level){
-		setting = current.Level;
+		setting = current.Level.Length <= levelStringMaxLength ? current.Level : current.Level.Substring(0,levelStringMaxLength);
 	}
 
-	if(current.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Interior_P" && old.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Exterior_P"){
+	if(setting == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Interio" && oldsetting == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Accom_Exterio"){
 		setting = "Accom_Revist";
 	}
 	
-	if(current.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Exterior_P" && old.Level == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Legs_P"){
+	if(setting == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Admin_Exterio" && oldsetting == "/Game/Habitat/Maps/Story/Persistent/30_Event/Event_Legs_P"){
 		setting = "Admin_Ex_Revisit";
 	}
 	
